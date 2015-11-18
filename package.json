@@ -1,0 +1,11 @@
+{
+  "name": "credo",
+  "version": "0.0.0",
+  "description": "credo",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "KYOTA_KONNO",
+  "license": "ISC"
+}
