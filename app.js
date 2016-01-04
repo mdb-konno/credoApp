@@ -6,7 +6,6 @@ var BrowserWindow = require('browser-window'); // ウィンドウを作成する
 var Tray = require('tray');
 var Menu = require('menu');
 var appIcon = null;
-
 var win = null; // メインウィンドウはGCされないようにグローバル宣言
 require('crash-reporter').start(); // クラッシュレポート
 
@@ -16,21 +15,22 @@ require('crash-reporter').start(); // クラッシュレポート
 // Icon
 // --------------------------------------------------------
 function icon(){
-    var Menu = require("menu");
-    var Tray = require("tray");
+    var Menu = require('menu');
+    var Tray = require('tray');
     var appIcon = new Tray(__dirname + '/img/icon.png');
 
-    var contextMenu = Menu.buildFromTemplate([
-            { label: "Front display", click: function () { win.focus(); } },
-            { label: "Quit", click: function () { win.close();app.quit(); } }
-        ]);
-    appIcon.setContextMenu(contextMenu);
+    // var contextMenu = Menu.buildFromTemplate([
+    //         { label: 'Front display', click: function () { win.focus(); } },
+    //         { label: 'Quit', click: function () { win.close();app.quit(); } }
+    //     ]);
+
+    // appIcon.setContextMenu(contextMenu);
 
      // タスクトレイのツールチップをアプリ名に
     appIcon.setToolTip(app.getName());
 
     // タスクトレイが左クリックされた場合、アプリのウィンドウをアクティブに
-    appIcon.on("clicked", function () {
+    appIcon.on('clicked', function () {
         win.focus();
     });
 }
@@ -40,7 +40,7 @@ function icon(){
 // --------------------------------------------------------
 // Toolbar Menu
 // --------------------------------------------------------
-var template = [{
+var toolbarMenu = [{
     label: 'ReadUs',
     submenu: [{
         label: 'Quit',
@@ -51,7 +51,7 @@ var template = [{
     }]
 }];
 
-var menu = Menu.buildFromTemplate(template);
+var menu = Menu.buildFromTemplate(toolbarMenu);
 
 
 
@@ -61,7 +61,7 @@ var menu = Menu.buildFromTemplate(template);
 app.on('ready', function() {
     win = new BrowserWindow({
         width: 904,
-        height: 636,
+        height: 610,
         center: true,
         transparent: false,
         frame: false,
@@ -72,7 +72,7 @@ app.on('ready', function() {
     win.loadUrl('file://' + __dirname + '/index.html');
     win.show(); //チラつき問題のため、非表示してから表示
 
-    // Menu.setApplicationMenu(menu);
+    Menu.setApplicationMenu(menu); // ツールバーメニュー
 
     icon(); // ツールバーアイコン設定
 
